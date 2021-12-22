@@ -2,6 +2,14 @@
   text-align: center;
 }
 
+ol {
+  list-style: none;
+}
+
+.poster {
+  height: 500px;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
