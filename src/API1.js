@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from "react"
-import "./App.css"
+import './API1.css'
+import './index.js'
 
 
 const App = () => {
     const [data, setData] = useState({})
-const [userInput, setUserInput] = useState("")
+    const [userInput, setUserInput] = useState("")
+    const [error, setError] = useState(true)
+    const [screen, setScreen] = useState("")
+
 
     // useEffect(() => {
     //   handleFetch()
@@ -16,37 +20,47 @@ const [userInput, setUserInput] = useState("")
 
     }
 
-    const handleFetch = async () => {
-      const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=madrid&appid=c6c21e132f5c89a6375f15d47109b7bd&units=metric`, {
-        method: "GET",
-      })
-      const data = await response.json()
-      setData(data)
-      console.log(response)
-      console.log(data)
+  const clearScreen = () => {
+  setUserInput("")
     }
-    // https://api.chucknorris.io/jokes/random
+
+
+    const handleFetch = async () => {
+      const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${userInput}&appid=c6c21e132f5c89a6375f15d47109b7bd&units=metric`, {
+        method: "GET",
+    
+      })
+      const city = await response.json()
+      setData(city)
+      setUserInput(userInput) // update/ set setUserInput to userinput
+      console.log(response)
+      console.log(city)
+      setUserInput("")
+      if (city.length <= 0) {
+        return 
+      }
+    }
+
+
   
     return (
       <div className="App">
-        <h1>WEATHER:</h1>
-        <h3>{userInput}</h3>
-        <button onClick={handleFetch}>Enter</button>
-        
-      
-       
-        <div>
-        <input onChange={updateInput} value={userInput} /></div>
-        <h2>{userInput}</h2>
-        {data.main ? <Quote data={data} /> : <p>{}</p>}
-    
-        
-    
-    
+        <div className="wrapperMain">
+          <h1>WEATHER</h1>
+
+          <div>
+          <input placeholder="Type name of city" type="text" onChange={updateInput} value={userInput} /></div>
+          <button onClick={handleFetch}>Enter</button>
+          <h2 className="UI">{userInput}</h2>
+          <h2>{data.name}</h2>
+          {data.main || data.weather ? <Quote data={data} /> : <p></p>}
+        </div>
+
       </div>
     )
-  }
 
+}
+  
   // const TextInput = (props, updateInput) => {
   //   return (
   //     <div><input updateInput = {updateInput} onChange={updateInput} placeholder="Type City Location"></input></div>
@@ -56,11 +70,17 @@ const [userInput, setUserInput] = useState("")
   // }
   
   // location: set {data.name} = userInput     setData(userInput)
-  const Quote = ({ data }) => <div>
-    <p>Location: {data.name}</p> 
-    <p>Temperature {data.main.temp}	°C</p>
-    <p>Description:{data.weather.description}</p>
-  </div>
+  const Quote = ({ data }) => <div className="wrapper">
+    <div className="quoteBox">
+      <p className="bold">Temperature </p>
+        <p>{data.main.temp}	°</p>
+      <p className="bold">Humidity: {data.main.humidity} %</p>
+      <p>{data.main.humidity}"%"</p>
+      <p className="bold">Description:</p>
+      <p>{data.weather[0].description} </p>
+      </div>
+    </div>
+
 
 export default App
 

@@ -8,11 +8,15 @@
 # apps
 App.js
 App.test.js
+covidApp.jsx
 setupTests.js
 myMovieDB.jsx
+movieDB.jsx
 reactRouter.jsx
 
 
+#css
+App.css
 
 # testing
 /coverage

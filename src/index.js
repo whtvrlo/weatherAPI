@@ -8,6 +8,9 @@ import useEffect from './useEffect';
 import App from './API1';
 // import App from './covidApp'
 
+// google font
+
+
 
 ReactDOM.render(
   <React.StrictMode>
